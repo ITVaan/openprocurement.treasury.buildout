@@ -1,5 +1,4 @@
 from setuptools import setup, find_packages
-import os
 
 version = '1.0'
 
@@ -11,6 +10,8 @@ requires = [
     'mock',
     'pyramid_exclog',
     'requests',
+    'restkit',
+    'retrying',
     'pyramid',
     'pytz',
     'simplejson',
@@ -41,7 +42,9 @@ databridge_requires = requires + [
     'LazyDB',
     'ExtendedJournalHandler',
     'requests',
-    'openprocurement_client>=1.0b2'
+    'restkit',
+    'retrying',
+    'openprocurement.integrations.treasury'
 ]
 
 api_test_requires = requires + [
@@ -54,34 +57,40 @@ api_requires = requires + [
 
 entry_points = {
     'paste.app_factory': [
-        'main = openprocurement.integrations.treasury.databridge.bridge:main'
+        'main = openprocurement.integrations.treasury:main'
     ],
+    'console_scripts': [
+        'treasure_bridge = openprocurement.integrations.treasury.databridge:main'
+    ]
 }
 
-setup(name='openprocurement.integrations.treasury',
-      version=version,
-      description="",
-      long_description=open("README.md").read(),
-      classifiers=[
-          "Framework :: Pylons",
-          "License :: OSI Approved :: Apache Software License",
-          "Programming Language :: Python",
-          "Topic :: Internet :: WWW/HTTP",
-          "Topic :: Internet :: WWW/HTTP :: WSGI :: Application"
-      ],
-      keywords="web services",
-      author='Quintagroup, Ltd.',
-      author_email='info@quintagroup.com',
-      license='Apache License 2.0',
-      url='https://github.com/ITVaan/openprocurement.integrations.treasury',
-      packages=find_packages(exclude=['ez_setup']),
-      include_package_data=True,
-      zip_safe=False,
-      install_requires=requires,
-      extras_require={'databridge': databridge_requires,
-                      'databridge_test': databridge_test_requires,
-                      'test': test_requires,
-                      'api': api_requires,
-                      'api_test': api_test_requires},
-      entry_points=entry_points,
-      )
+setup(
+    name='openprocurement.integrations.treasury',
+    version=version,
+    description="",
+    long_description=open("README.md").read(),
+    classifiers=[
+        "Framework :: Pylons",
+        "License :: OSI Approved :: Apache Software License",
+        "Programming Language :: Python",
+        "Topic :: Internet :: WWW/HTTP",
+        "Topic :: Internet :: WWW/HTTP :: WSGI :: Application"
+    ],
+    keywords="web services",
+    author='Quintagroup, Ltd.',
+    author_email='info@quintagroup.com',
+    license='Apache License 2.0',
+    url='https://github.com/ITVaan/openprocurement.integrations.treasury',
+    packages=find_packages(exclude=['ez_setup']),
+    include_package_data=True,
+    zip_safe=False,
+    install_requires=requires,
+    extras_require={
+        'databridge': databridge_requires,
+        'databridge_test': databridge_test_requires,
+        'test': test_requires,
+        'api': api_requires,
+        'api_test': api_test_requires
+    },
+    entry_points=entry_points
+)
