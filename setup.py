@@ -12,6 +12,10 @@ requires = [
     'requests',
     'restkit',
     'retrying',
+    'esculator',
+    'iso8601',
+    'pytz',
+    'redis',
     'pyramid',
     'pytz',
     'simplejson',
@@ -44,7 +48,12 @@ databridge_requires = requires + [
     'requests',
     'restkit',
     'retrying',
+    'esculator',
+    'iso8601',
+    'pytz',
+    'redis',
     'openprocurement.integrations.treasury'
+    'openprocurement_client>=1.0b2'
 ]
 
 api_test_requires = requires + [
@@ -60,7 +69,7 @@ entry_points = {
         'main = openprocurement.integrations.treasury:main'
     ],
     'console_scripts': [
-        'treasure_bridge = openprocurement.integrations.treasury.databridge:main'
+        'treasury_bridge = openprocurement.integrations.treasury.databridge:main'
     ]
 }
 
